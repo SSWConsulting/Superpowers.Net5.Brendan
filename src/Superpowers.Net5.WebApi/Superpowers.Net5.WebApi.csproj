@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Superpowers.Net5.Blazor\Client\Superpowers.Net5.Blazor.Client.csproj" />
+    <ProjectReference Include="..\Superpowers.Net5.Models\Superpowers.Net5.Models.csproj" />
+  </ItemGroup>
+
+</Project>
