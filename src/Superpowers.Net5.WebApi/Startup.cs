@@ -62,6 +62,7 @@ namespace Superpowers.Net5.WebApi
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
         }
     }
 }
