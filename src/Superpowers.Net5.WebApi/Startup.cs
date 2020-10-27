@@ -54,7 +54,7 @@ namespace Superpowers.Net5.WebApi
 
             app.UseHttpsRedirection();
 
-            app.UseBlazorFrameworkFiles();
+           
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -65,6 +65,8 @@ namespace Superpowers.Net5.WebApi
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
+            app.UseBlazorFrameworkFiles();
 
         }
     }

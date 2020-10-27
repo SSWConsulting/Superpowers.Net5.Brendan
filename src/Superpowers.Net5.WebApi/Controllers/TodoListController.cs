@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Superpowers.Net5.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class TodoListController : ControllerBase
     {
 
@@ -22,7 +23,8 @@ namespace Superpowers.Net5.WebApi.Controllers
             this._mediator = mediator;
         }
 
-        [HttpGet("/all")]
+        [Route("")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoListDto>>> All(CancellationToken cancellationToken)
         {
             return Ok(await _mediator.Send(new GetTodoLists(), cancellationToken));
