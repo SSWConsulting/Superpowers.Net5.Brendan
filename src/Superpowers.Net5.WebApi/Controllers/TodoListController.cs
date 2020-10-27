@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Superpowers.Net5.Models.Commands;
+using Superpowers.Net5.Models.Queries;
 using Superpowers.Net5.Models.Todo;
 using Superpowers.Net5.WebApi.Cqrs.TodoLists;
 using System;
@@ -30,5 +32,12 @@ namespace Superpowers.Net5.WebApi.Controllers
             return Ok(await _mediator.Send(new GetTodoLists(), cancellationToken));
         }
 
+
+        [Route("Create")]
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<TodoListDto>>> Create(CreateTodoList command, CancellationToken cancellationToken)
+        {
+            return Ok(await _mediator.Send(command, cancellationToken));
+        }
     }
 }

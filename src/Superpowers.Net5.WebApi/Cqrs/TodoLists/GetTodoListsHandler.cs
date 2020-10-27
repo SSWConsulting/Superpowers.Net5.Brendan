@@ -1,21 +1,15 @@
 ﻿using MediatR;
 using Superpowers.Net5.Ef;
 using Superpowers.Net5.Models.Todo;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Net5DomainModel;
+using Superpowers.Net5.Models.Queries;
 
 namespace Superpowers.Net5.WebApi.Cqrs.TodoLists
 {
-    public record GetTodoLists: IRequest<IEnumerable<TodoListDto>>
-    {
-    }
-
-
     public class GetTodoListsHandler : IRequestHandler<GetTodoLists, IEnumerable<TodoListDto>>
     {
         private readonly TodoContext _ctx;

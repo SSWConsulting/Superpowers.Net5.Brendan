@@ -1,52 +1,58 @@
 ﻿@page "/todo"
 @using Superpowers.Net5.Models.Todo
+@using Superpowers.Net5.Models.Commands
+@using Superpowers.Net5.Models.Queries
 @inject HttpClient Http
 
 <h1>Todo Lists</h1>
 
 
-    <div class="row">
-        <div class="col-4">
-            <h4>Lists</h4>
+<div class="row">
+    <div class="col-4">
+        <h4>Lists</h4>
 
-            @if (todoLists != null)
-            {
-                <ul class="list-group mb-2">
-                    @foreach (var todoList in todoLists)
-                    {
-                        <li class="list-group-item">@todoList.Title</li>
-                    }
-                </ul>
-            }
-            
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" @bind="newListTitle" @bind:event="oninput" placeholder="Add New List">
+        @if (todoLists != null)
+        {
+            <div class="list-group mb-2">
+                @foreach (var todoList in todoLists)
+                {
+                    <a hredf="#" @onclick="@(e => SelectList(todoList))" class="list-group-item list-group-item-action">@todoList.Title</a>
+                }
+            </div>
+        }
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" @bind="newListTitle" @bind:event="oninput" placeholder="Add New List">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" disabled="@(string.IsNullOrWhiteSpace(newListTitle))" @onclick="CreateList">+ Add</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-8">
+        @if (selectedTodoList != null)
+        {
+            <h4>@selectedTodoList.Title</h4>
+            <ul>
+                @foreach (var todoItem in selectedTodoList.Items)
+                {
+                    <li class="">@todoItem.Title</li>
+                }
+            </ul>
+
+            <div class="input-group mb-3 col-8">
+                <input type="text" class="form-control" placeholder="Add List Item" @bind="newItemTitle" @bind:event="oninput">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" disabled="@(string.IsNullOrWhiteSpace(newListTitle))">+ Add</button>
+                    <button class="btn btn-primary" type="button" disabled="@(string.IsNullOrWhiteSpace(newItemTitle))">+ Add</button>
                 </div>
             </div>
-
-        </div>
-        <div class="col-8">
-            @if (selectedTodoList != null)
-            {
-                <h4>@selectedTodoList.Title</h4>
-                <ul>
-                    @foreach (var todoItem in selectedTodoList.Items)
-                    {
-                        <li class="">@todoItem.Title</li>
-                    }
-                </ul>
-
-                <div class="input-group mb-3 col-8">
-                    <input type="text" class="form-control" placeholder="Add List Item" @bind="newItemTitle" @bind:event="oninput">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" disabled="@(string.IsNullOrWhiteSpace(newItemTitle))">+ Add</button>
-                    </div>
-                </div>
-            }
-        </div>
+        } 
+        else
+        {
+            <h4>Loading...</h4>
+        }
     </div>
+</div>
 
 
 @code {
@@ -70,6 +76,24 @@
         if (selectedTodoList == null || !todoLists.Select(t => t.Id).Contains(selectedTodoList.Id))
         {
             selectedTodoList = todoLists.FirstOrDefault();
+        }
+    }
+
+    private void SelectList(TodoListDto list)
+    {
+        selectedTodoList = list;
+    }
+
+    private async Task CreateList()
+    {
+        var postResponse = await Http.PostAsJsonAsync<CreateTodoList>(
+            "/api/todolist/create",
+            new CreateTodoList { Title = newListTitle }
+        );
+
+        if (postResponse.IsSuccessStatusCode)
+        {
+            await LoadLists();
         }
 
     }
