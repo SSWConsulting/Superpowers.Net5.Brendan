@@ -10,7 +10,7 @@ using Superpowers.Net5.Ef;
 namespace Superpowers.Net5.Ef.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20201027040105_InitialCreate")]
+    [Migration("20201027043843_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,48 @@ namespace Superpowers.Net5.Ef.Migrations
                     b.HasIndex("ListId");
 
                     b.ToTable("TodoItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -2,
+                            Done = false,
+                            ListId = -1,
+                            Priority = 2,
+                            Title = "Attend .NET Superpowers"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Done = false,
+                            ListId = -1,
+                            Priority = 2,
+                            Title = "Watch the Demos"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Done = false,
+                            ListId = -1,
+                            Priority = 2,
+                            Title = "Try it on your own projects"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            Done = false,
+                            ListId = -1,
+                            Priority = 2,
+                            Title = "???"
+                        },
+                        new
+                        {
+                            Id = -6,
+                            Done = false,
+                            ListId = -1,
+                            Priority = 2,
+                            Title = "Profit"
+                        });
                 });
 
             modelBuilder.Entity("Net5DomainModel.TodoList", b =>
@@ -90,6 +132,14 @@ namespace Superpowers.Net5.Ef.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TodoLists");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Colour = "#FF0000",
+                            Title = "Succeed with .NET 5"
+                        });
                 });
 
             modelBuilder.Entity("TagTodoItem", b =>

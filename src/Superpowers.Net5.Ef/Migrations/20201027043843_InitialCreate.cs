@@ -82,6 +82,23 @@ namespace Superpowers.Net5.Ef.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "TodoLists",
+                columns: new[] { "Id", "Colour", "Title" },
+                values: new object[] { -1, "#FF0000", "Succeed with .NET 5" });
+
+            migrationBuilder.InsertData(
+                table: "TodoItems",
+                columns: new[] { "Id", "Done", "ListId", "Note", "Priority", "Reminder", "Title" },
+                values: new object[,]
+                {
+                    { -2, false, -1, null, 2, null, "Attend .NET Superpowers" },
+                    { -3, false, -1, null, 2, null, "Watch the Demos" },
+                    { -4, false, -1, null, 2, null, "Try it on your own projects" },
+                    { -5, false, -1, null, 2, null, "???" },
+                    { -6, false, -1, null, 2, null, "Profit" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_TagTodoItem_TodoItemsId",
                 table: "TagTodoItem",
