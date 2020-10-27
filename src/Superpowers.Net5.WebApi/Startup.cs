@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Superpowers.Net5.Ef;
+using MediatR;
+using System.Reflection;
 
 namespace Superpowers.Net5.WebApi
 {
@@ -35,6 +37,7 @@ namespace Superpowers.Net5.WebApi
             });
 
             services.AddTodoEntityFramework(Configuration.GetConnectionString("TodoDb"));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

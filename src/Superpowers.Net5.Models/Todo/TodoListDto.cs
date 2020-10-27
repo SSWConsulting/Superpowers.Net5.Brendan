@@ -11,7 +11,7 @@ namespace Superpowers.Net5.Models.Todo
 
         public string Title { get; init; }
 
-        public IList<TodoItemDto> Items { get; init; }
+        public IEnumerable<TodoItemDto> Items { get; init; }
 
     }
 }

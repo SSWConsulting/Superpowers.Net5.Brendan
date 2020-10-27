@@ -16,7 +16,7 @@ namespace Superpowers.Net5.Models.Todo
 
         public bool Done { get; init; }
 
-        public int Priority { get; init; }
+        public PriorityLevelDto Priority { get; init; }
 
         public string Note { get; init; }
     }
