@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Superpowers.Net5.Ef;
 
 namespace Superpowers.Net5.WebApi
 {
@@ -32,6 +33,8 @@ namespace Superpowers.Net5.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Superpowers.Net5.WebApi", Version = "v1" });
             });
+
+            services.AddTodoEntityFramework(Configuration.GetConnectionString("TodoDb"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,13 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0-rc.2.20475.17" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Superpowers.Net5.Blazor\Client\Superpowers.Net5.Blazor.Client.csproj" />
+    <ProjectReference Include="..\Superpowers.Net5.Domain\Superpowers.Net5.Domain.csproj" />
+    <ProjectReference Include="..\Superpowers.Net5.Ef\Superpowers.Net5.Ef.csproj" />
     <ProjectReference Include="..\Superpowers.Net5.Models\Superpowers.Net5.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Cqrs\TodoItems\" />
   </ItemGroup>
 
 </Project>
