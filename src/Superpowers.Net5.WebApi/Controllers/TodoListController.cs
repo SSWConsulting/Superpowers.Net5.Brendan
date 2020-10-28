@@ -39,5 +39,38 @@ namespace Superpowers.Net5.WebApi.Controllers
         {
             return Ok(await _mediator.Send(command, cancellationToken));
         }
+
+        [Route("CreateItem")]
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<TodoListDto>>> CreateItem(CreateTodoListItem command, CancellationToken cancellationToken)
+        {
+            return Ok(await _mediator.Send(command, cancellationToken));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new DeleteTodoList() { Id = id });
+            return Ok();
+        }
+
+
+        [HttpDelete]
+        [Route("item/{id}")]
+        public async Task<ActionResult> DeleteItem(int id, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new DeleteTodoListItem() { Id = id });
+            return Ok();
+        }
+
+
+        [HttpPut]
+        [Route("itemdone")]
+        public async Task<ActionResult> ItemDone(ItemDone command, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return Ok();
+        }
+
     }
 }

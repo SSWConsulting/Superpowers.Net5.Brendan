@@ -4,6 +4,12 @@
 @using Superpowers.Net5.Models.Queries
 @inject HttpClient Http
 
+<style type="text/css">
+    .text-decoration-line-through {
+        text-decoration: line-through
+    }
+</style>
+
 <h1>Todo Lists</h1>
 
 
@@ -13,12 +19,15 @@
 
         @if (todoLists != null)
         {
-            <div class="list-group mb-2">
+            <ul class="list-group mb-2">
                 @foreach (var todoList in todoLists)
                 {
-                    <a hredf="#" @onclick="@(e => SelectList(todoList))" class="list-group-item list-group-item-action">@todoList.Title</a>
+                    <li @onclick="@(e => SelectList(todoList))" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        @todoList.Title
+                        <span><a href="#" @onclick:preventDefault @onclick:stopPropagation @onclick="@(e => DeleteList(todoList.Id))">Delete</a></span>
+                    </li>
                 }
-            </div>
+            </ul>
         }
 
         <div class="input-group mb-3">
@@ -33,17 +42,23 @@
         @if (selectedTodoList != null)
         {
             <h4>@selectedTodoList.Title</h4>
-            <ul>
+            <ul class="list-group mb-2">
                 @foreach (var todoItem in selectedTodoList.Items)
                 {
-                    <li class="">@todoItem.Title</li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="@(todoItem.Done ? "text-decoration-line-through":"")">@todoItem.Title</span>
+                        <span class="">
+                            <a href="#" @onclick:preventDefault @onclick:stopPropagation @onclick="@(c => ItemDone(todoItem.Id, !todoItem.Done))">Done</a> |
+                            <a href="#" @onclick:preventDefault @onclick:stopPropagation @onclick="@(e => DeleteListItem(todoItem.Id))">Delete</a>
+                        </span>
+                    </li>
                 }
             </ul>
 
             <div class="input-group mb-3 col-8">
                 <input type="text" class="form-control" placeholder="Add List Item" @bind="newItemTitle" @bind:event="oninput">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" disabled="@(string.IsNullOrWhiteSpace(newItemTitle))">+ Add</button>
+                    <button class="btn btn-primary" type="button" disabled="@(string.IsNullOrWhiteSpace(newItemTitle))" @onclick="CreateListItem">+ Add</button>
                 </div>
             </div>
         } 
@@ -77,6 +92,10 @@
         {
             selectedTodoList = todoLists.FirstOrDefault();
         }
+        else
+        {
+            selectedTodoList = todoLists.FirstOrDefault(l => l.Id == selectedTodoList.Id);
+        }
     }
 
     private void SelectList(TodoListDto list)
@@ -94,8 +113,56 @@
         if (postResponse.IsSuccessStatusCode)
         {
             await LoadLists();
+            // StateHasChanged();
         }
+    }
 
+    private async Task CreateListItem()
+    {
+        var postResponse = await Http.PostAsJsonAsync<CreateTodoListItem>(
+            "/api/todolist/createitem",
+            new CreateTodoListItem { ListId = selectedTodoList.Id, Title = newItemTitle }
+        );
+
+        if (postResponse.IsSuccessStatusCode)
+        {
+            await LoadLists();
+            // StateHasChanged();
+        }
+    }
+
+
+    private async Task DeleteList(int id)
+    {
+        var delResponse = await Http.DeleteAsync($"/api/todolist/{id}");
+        if (delResponse.IsSuccessStatusCode)
+        {
+            await LoadLists();
+        }
+    }
+
+    private async Task DeleteListItem(int id)
+    {
+        var delResponse = await Http.DeleteAsync($"/api/todolist/item/{id}");
+        if (delResponse.IsSuccessStatusCode)
+        {
+            await LoadLists();
+        }
+    }
+
+
+    private async Task ItemDone(int itemId, bool done)
+    {
+        var response = await Http.PutAsJsonAsync<ItemDone>("/api/todolist/itemdone", new ItemDone()
+        {
+            Id = itemId,
+            IsDone = done
+        });
+
+        if (response.IsSuccessStatusCode)
+        {
+            await (LoadLists());
+        }
     }
 
 }
