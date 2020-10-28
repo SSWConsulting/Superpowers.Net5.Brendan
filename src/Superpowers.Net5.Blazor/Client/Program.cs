@@ -1,3 +1,4 @@
+using Fluxor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,13 @@ namespace Superpowers.Net5.Blazor.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            // Add the following
+            var currentAssembly = typeof(Program).Assembly;
+            builder.Services.AddFluxor(options => {
+                options.ScanAssemblies(currentAssembly);
+                options.UseReduxDevTools();
+            });
 
             await builder.Build().RunAsync();
         }

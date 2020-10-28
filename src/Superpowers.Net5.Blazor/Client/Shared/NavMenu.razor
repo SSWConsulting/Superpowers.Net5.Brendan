@@ -1,4 +1,9 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Fluxor;
+@using Store.Todo
+@inject IState<TodoState> TodoState
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Superpowers.Net5.Blazor</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -24,7 +29,7 @@
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="todo">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Todo Lists
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Todo Lists (@(TodoState.Value.TodoLists.SelectMany(l => l.Items).Count(i => !i.Done)))
             </NavLink>
         </li>
     </ul>
