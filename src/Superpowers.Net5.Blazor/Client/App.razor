@@ -1,5 +1,9 @@
 @inject Fluxor.IDispatcher Dispatcher
-@using Store.Todo 
+@using Store.Todo
+@using Microsoft.AspNetCore.SignalR.Client
+@using  System.Collections.Immutable 
+@inject HubConnection HubConnection
+@implements IDisposable
 
 <Fluxor.Blazor.Web.StoreInitializer />
 <Router AppAssembly="@typeof(Program).Assembly">
@@ -13,12 +17,32 @@
     </NotFound>
 </Router>
 
-@code { 
+@code {
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         Dispatcher.Dispatch(new LoadListsAction());
-        return base.OnInitializedAsync();
+
+        await InitSignalR();
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task InitSignalR()
+    {
+        HubConnection.On<Superpowers.Net5.Models.Todo.TodoListDto[]>("ListsChanged", (newLists) =>
+        {
+            Dispatcher.Dispatch(new LoadListsSuccessAction { TodoLists = newLists.ToImmutableList() });
+        });
+
+        await HubConnection.StartAsync();
+    }
+
+
+    public void Dispose()
+    {
+        _ = HubConnection.DisposeAsync();
     }
 
 }

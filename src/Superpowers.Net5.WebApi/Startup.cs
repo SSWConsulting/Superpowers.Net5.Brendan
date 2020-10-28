@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Superpowers.Net5.Ef;
 using MediatR;
 using System.Reflection;
+using Microsoft.AspNetCore.ResponseCompression;
+using Superpowers.Net5.WebApi.Hubs;
 
 namespace Superpowers.Net5.WebApi
 {
@@ -38,11 +40,20 @@ namespace Superpowers.Net5.WebApi
 
             services.AddTodoEntityFramework(Configuration.GetConnectionString("TodoDb"));
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+
+            services.AddSignalR();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseCompression();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -63,6 +74,7 @@ namespace Superpowers.Net5.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<TodoHub>("/todohub");
                 endpoints.MapFallbackToFile("index.html");
             });
 

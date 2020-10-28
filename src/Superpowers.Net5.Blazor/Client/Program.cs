@@ -1,5 +1,6 @@
 using Fluxor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,6 +27,11 @@ namespace Superpowers.Net5.Blazor.Client
                 options.ScanAssemblies(currentAssembly);
                 options.UseReduxDevTools();
             });
+
+            builder.Services.AddSingleton<HubConnection>(c => new HubConnectionBuilder()
+                .WithUrl("https://localhost:44315/todohub")
+                .Build()
+            );
 
             await builder.Build().RunAsync();
         }

@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using Microsoft.AspNetCore.SignalR.Client;
 using Superpowers.Net5.Models.Commands;
 using System;
 using System.Collections.Generic;
@@ -19,25 +20,17 @@ namespace Superpowers.Net5.Blazor.Client.Store.Todo
 
     public class ItemDoneActionEffect : Effect<ItemDoneAction>
     {
-        private readonly HttpClient _http;
+        private readonly HubConnection _hubConnection;
 
-        public ItemDoneActionEffect(HttpClient http)
+        public ItemDoneActionEffect(HubConnection hubConnection)
         {
-            _http = http;
+            _hubConnection = hubConnection;
         }
 
         protected override async Task HandleAsync(ItemDoneAction action, IDispatcher dispatcher)
         {
-            var response = await _http.PutAsJsonAsync<ItemDone>("/api/todolist/itemdone", new ItemDone()
-            {
-                Id = action.Id,
-                IsDone = action.IsDone
-            });
-
-            if (response.IsSuccessStatusCode)
-            {
-                dispatcher.Dispatch(new LoadListsAction());
-            }
+            await _hubConnection.SendAsync("ItemDone", new ItemDone { Id = action.Id, IsDone = action.IsDone });
+            // no action. signal R should receive update separately
         }
     }
 }
