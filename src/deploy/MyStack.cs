@@ -45,7 +45,7 @@ class MyStack : Stack
 
 
         // docker registry
-        var registry = new Registry($"todo-acr", new RegistryArgs()
+        var registry = new Registry($"todoacr", new RegistryArgs()
         {
             ResourceGroupName = resourceGroup.Name,
             Sku = "Basic",
@@ -58,7 +58,8 @@ class MyStack : Stack
             ImageName = Output.Format($"{registry.LoginServer}/blazortodoapp:latest"),
             Build = new DockerBuild()
             {
-                Context = "../Superpowers.Net5.WebApi",
+                Context = "../",
+                Dockerfile = "../Superpowers.Net5.WebApi/Dockerfile"
             },
             Registry = new ImageRegistry()
             {
@@ -97,7 +98,7 @@ class MyStack : Stack
                 { "DOCKER_REGISTRY_SERVER_USERNAME", registry.AdminUsername },
                 { "DOCKER_REGISTRY_SERVER_PASSWORD", registry.AdminPassword },
                 { "WEBSITES_PORT", "80,443" },
-                { "ConnecitonStrings__TodoDb", SqlConnectionString },
+                { "ConnectionStrings__TodoDb", SqlConnectionString },
 
             },
             SiteConfig = new AppServiceSiteConfigArgs()
