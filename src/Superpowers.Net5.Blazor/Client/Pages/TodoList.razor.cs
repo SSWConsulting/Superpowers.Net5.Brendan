@@ -30,7 +30,7 @@ namespace Superpowers.Net5.Blazor.Client.Pages
 
         private void CreateList()
         {
-            Dispatcher.Dispatch(new AddListAction { Title = NewItemTitle });
+            Dispatcher.Dispatch(new AddListAction { Title = NewListTitle });
         }
 
         private void CreateListItem()

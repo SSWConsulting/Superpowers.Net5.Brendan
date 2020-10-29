@@ -1,0 +1,4 @@
+config:
+  azure:location: AustraliaEast
+  deploy:sqlPassword:
+    secure: AAABAEUzW6ma8vAaFy5x14ESCDeZm7PtXnDof1VIdk1u14QSG1kUY6D47A==

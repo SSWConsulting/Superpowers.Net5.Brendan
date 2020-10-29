@@ -20,6 +20,11 @@ namespace Superpowers.Net5.WebApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureAppConfiguration(config => config
+                        .AddJsonFile("appsettings.local.json", true)
+                        .AddEnvironmentVariables()
+                        .AddCommandLine(args)
+                    );
                     webBuilder.UseStartup<Startup>();
                 });
     }
