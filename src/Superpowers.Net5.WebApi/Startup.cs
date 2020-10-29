@@ -16,6 +16,7 @@ using MediatR;
 using System.Reflection;
 using Microsoft.AspNetCore.ResponseCompression;
 using Superpowers.Net5.WebApi.Hubs;
+using Todo;
 
 namespace Superpowers.Net5.WebApi
 {
@@ -31,7 +32,7 @@ namespace Superpowers.Net5.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddLogging(b => b.AddConsole());
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,6 +48,11 @@ namespace Superpowers.Net5.WebApi
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
+            });
+
+            services.AddGrpcClient<TodoService.TodoServiceClient>(o =>
+            {
+                o.Address = new Uri("https://localhost:1265");
             });
         }
 

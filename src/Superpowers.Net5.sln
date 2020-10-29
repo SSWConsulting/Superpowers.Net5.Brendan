@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Superpowers.Net5.Models", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Superpowers.Net5.Domain", "Superpowers.Net5.Domain\Superpowers.Net5.Domain.csproj", "{BE3420F4-57B6-4A0B-A94D-FF4987E5C7FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Superpowers.Net5.Ef", "Superpowers.Net5.Ef\Superpowers.Net5.Ef.csproj", "{103E77A1-F00A-4D3B-ADEC-91B0BF64368D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Superpowers.Net5.Ef", "Superpowers.Net5.Ef\Superpowers.Net5.Ef.csproj", "{103E77A1-F00A-4D3B-ADEC-91B0BF64368D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPowers.Net5.GRPC", "SuperPowers.Net5.GRPC\SuperPowers.Net5.GRPC.csproj", "{5EDA1A6C-4BF7-4D11-902C-B09BFBBAF304}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{103E77A1-F00A-4D3B-ADEC-91B0BF64368D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{103E77A1-F00A-4D3B-ADEC-91B0BF64368D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{103E77A1-F00A-4D3B-ADEC-91B0BF64368D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EDA1A6C-4BF7-4D11-902C-B09BFBBAF304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDA1A6C-4BF7-4D11-902C-B09BFBBAF304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDA1A6C-4BF7-4D11-902C-B09BFBBAF304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDA1A6C-4BF7-4D11-902C-B09BFBBAF304}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,16 @@
+﻿syntax="proto3";
+
+package Todo;
+
+service TodoService {
+	rpc SendItemDone(TodoItemDone) returns (TodoItemDoneReceived);
+}
+
+message TodoItemDone {
+	int32 Id = 1;
+	string Title = 2;
+}
+
+message TodoItemDoneReceived {
+
+}
