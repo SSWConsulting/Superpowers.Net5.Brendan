@@ -29,7 +29,7 @@ namespace Superpowers.Net5.Blazor.Client
             });
 
             builder.Services.AddSingleton<HubConnection>(c => new HubConnectionBuilder()
-                .WithUrl($"{builder.HostEnvironment.BaseAddress}/todohub")
+                .WithUrl($"{builder.HostEnvironment.BaseAddress}todohub")
                 .Build()
             );
 
